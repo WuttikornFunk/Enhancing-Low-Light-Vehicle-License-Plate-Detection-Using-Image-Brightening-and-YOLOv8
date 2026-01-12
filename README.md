@@ -1,79 +1,68 @@
-# 🚗 Low-Light Vehicle & License Plate Detection using YOLOv8
+# 🚘 Low-Light Vehicle & License Plate Detection using YOLOv8
 
-![Project Status](https://img.shields.io/badge/Status-Completed-success)
-![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
-![YOLOv8](https://img.shields.io/badge/Model-YOLOv8-red)
-![OpenCV](https://img.shields.io/badge/OpenCV-Image_Processing-green)
+![Project Status](https://img.shields.io/badge/Status-Completed-success?style=for-the-badge)
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python)
+![YOLOv8](https://img.shields.io/badge/Model-YOLOv8-FF0055?style=for-the-badge&logo=yolo)
+![OpenCV](https://img.shields.io/badge/Library-OpenCV-green?style=for-the-badge&logo=opencv)
 
-**An advanced object detection project designed to identify vehicles and license plates in challenging low-light conditions.**
+> **An advanced object detection project designed to identify vehicles and license plates in challenging low-light conditions.**
 
 This project addresses the limitations of standard detection models in dark environments by implementing a robust **Image Preprocessing Pipeline**. By leveraging **CLAHE** and **Gamma Correction**, the system enhances image visibility and contrast before feeding data into the **YOLOv8** model, significantly improving detection accuracy at night.
 
----
+## 💡 Methodology: The Enhancement Pipeline
 
+To ensure the model performs well in low-light scenarios, I implemented a preprocessing pipeline to enhance the input images before detection:
 
----
+1.  **Color Space Conversion:** The RGB image is converted to the **LAB Color Space** to isolate the Luminance (L) channel from color information.
+2.  **CLAHE (Contrast Limited Adaptive Histogram Equalization):** Applied strictly to the **L-channel**. This enhances local contrast in dark regions without amplifying noise, which is critical for night-time images.
+3.  **Gamma Correction:** Adjusts the overall brightness (luminance) while preventing overexposure in already bright areas (e.g., car headlights or street lamps).
+4.  **YOLOv8 Detection:** The enhanced image is processed by a custom-trained **YOLOv8** model to detect vehicles and license plates.
 
-## 💡(Methodology)
+## 📂 Project Structure
 
-เพื่อให้โมเดลทำงานได้ดีในที่มืด ผมได้สร้าง Preprocessing Pipeline เพื่อปรับปรุงภาพดังนี้:
+The repository is organized into three main modules:
 
-Color Space Conversion: The RGB image is converted to the LAB Color Space to isolate the Luminance (L) channel from color information.
-
-CLAHE (Contrast Limited Adaptive Histogram Equalization): Applied strictly to the L-channel. This enhances local contrast in dark regions without amplifying noise, which is crucial for night-time images.
-
-Gamma Correction: Adjusts the overall brightness (luminance) while preventing overexposure in already bright areas (e.g., car headlights or street lamps).
-
-YOLOv8 Detection: The enhanced image is processed by a custom-trained YOLOv8 model to detect vehicles and license plates.
-
-📂 Project Structure
----
-
-## 📂 โครงสร้างโปรเจค (Project Structure)
-
-Repository นี้ประกอบด้วย 3 ส่วนหลัก ดังนี้:
-
-| ไฟล์ | รายละเอียด |
+| File | Description |
 | :--- | :--- |
-| **`01_Data_Prep_and_Training.ipynb`** | **Part 1:** การเตรียมข้อมูล (Data Preprocessing), การประยุกต์ใช้ CLAHE/Gamma กับ Dataset และการเทรนโมเดล YOLOv8 |
-| **`02_Model_Evaluation.ipynb`** | **Part 2:** การวัดผลและวิเคราะห์ เปรียบเทียบผลลัพธ์ระหว่างภาพต้นฉบับ (Original) กับภาพที่ปรับแสงแล้ว (Enhanced) |
-| **`03_Video_Inference.ipynb`** | **Part 3:** การนำโมเดลไปทดสอบกับไฟล์วิดีโอจริง (Video Inference Pipeline) |
+| **`01_Data_Prep_and_Training.ipynb`** | **Part 1:** Data Preprocessing, applying CLAHE/Gamma to the dataset, and training the YOLOv8 model. |
+| **`02_Model_Evaluation.ipynb`** | **Part 2:** Performance analysis and visual comparison between **Original** vs. **Enhanced** images. |
+| **`03_Video_Inference.ipynb`** | **Part 3:** Inference pipeline for processing real-world video footage. |
 
----
+## 📊 Performance Analysis
 
-## 📊 การวิเคราะห์ผลลัพธ์ (Performance Analysis)
+Comparing the Baseline model with the Enhanced Image model yielded the following insights:
 
-จากการเปรียบเทียบระหว่างโมเดลปกติ (Baseline) และโมเดลที่ใช้เทคนิค Image Enhancement:
+### 1. Visual Comparison
+The model trained on **Enhanced** images demonstrated significantly better object detection capabilities in shadowed areas and low-contrast environments where vehicles often blend into the background.
 
-### 1. การเปรียบเทียบเชิงคุณภาพ (Visual Comparison)
-โมเดลที่ผ่านการปรับปรุงภาพ (Enhanced) สามารถตรวจจับวัตถุในมุมมืด หรือวัตถุที่กลืนไปกับพื้นหลังได้ดีกว่าอย่างเห็นได้ชัด
-
-
-### 2. ประสิทธิภาพ (Metrics)
+### 2. Metrics & Configuration
 * **Model Architecture:** YOLOv8n (Nano)
 * **Epochs:** 25
-* **Result:** โมเดลสามารถรักษาสมดุลระหว่าง Precision และ Recall ได้ดี แม้จะมีการปรับแต่งภาพซึ่งอาจทำให้เกิด Noise เล็กน้อย แต่แลกมาด้วยการมองเห็นวัตถุที่ชัดเจนขึ้นมาก
+* **Result:** The model maintains a strong balance between **Precision** and **Recall**. While image enhancement introduced slight noise, the trade-off resulted in substantially better object visibility and detection rates.
 
----
+## 🛠 Tech Stack
 
-## 🛠 (Tech Stack)
-
-* **Language:** Python
+* **Language:** Python 3.10+
 * **Deep Learning:** Ultralytics YOLOv8
-* **Computer Vision:** OpenCV (cv2), NumPy, Matplotlib
-* **Environment:** Google Colab (GPU)
+* **Computer Vision:** OpenCV (`cv2`), NumPy, Matplotlib
+* **Environment:** Google Colab (GPU recommended)
 * **Dataset Management:** Roboflow
 
----
+## 🚀 How to Run
 
-## 🚀(How to Run)
-
-1.  Clone repository 
-2.  openfile Notebook (`.ipynb`) in **Google Colab**
-3.  install Libraries ที่จำเป็น:
-    ```python
-    !pip install ultralytics roboflow opencv-python-headless
+1.  **Clone the Repository**
+    ```bash
+    git clone https://github.com/WuttikornFunk/Enhancing-Low-Light-Vehicle-License-Plate-Detection-Using-Image-Brightening-and-YOLOv8.git
+    cd Enhancing-Low-Light-Vehicle-License-Plate-Detection-Using-Image-Brightening-and-YOLOv8
     ```
 
+2.  **Open in Google Colab or Jupyter**
+    It is recommended to run the notebooks in order:
+    
+4.  **Install Dependencies**
+    Run the following command inside the notebook cell:
+    ```python
+    !pip install ultralytics roboflow opencv-python-headless matplotlib
+    ```
 
 ---
