@@ -48,6 +48,16 @@ The model trained on **Enhanced** images demonstrated significantly better objec
 * **Environment:** Google Colab (GPU recommended)
 * **Dataset Management:** Roboflow
 
+## 📸 Screenshots
+
+<p align="center">
+  <img src="image/testimage.png" alt="test Page" width="90%">
+  <img src="image/enhance.png" alt="enhance Page" width="90%">
+  <img src="image/detect1.png" alt="Home Page" width="100%">
+  <img src="image/video1.png" alt="Home Page" width="45%">
+  <img src="image/video2.png" alt="Scanning Interface" width="45%">
+</p>
+
 ## 🚀 How to Run
 
 1.  **Clone the Repository**
